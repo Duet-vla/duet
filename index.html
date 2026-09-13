@@ -40,7 +40,7 @@
       <div class="columns is-centered">
         <div class="column has-text-centered">
           <h1 class="title publication-title"><span class="name">DUET:</span> Endogenous Failure Detection and Recovery via Dual-Action Disagreement</h1>
-          <p class="publication-venue is-size-4">IEEE International Conference on Robotics and Automation (ICRA), 2026</p>
+          <p class="publication-venue is-size-4">IEEE International Conference on Robotics and Automation (ICRA), 2027</p>
           <div class="publication-authors is-size-5">
             <span>Anonymous Authors</span>
           </div>
@@ -76,12 +76,10 @@
 </section>
 
 <section class="hero teaser">
-  <div class="container is-max-desktop">
+  <div class="container is-max-widescreen">
     <div class="hero-body">
-      <figure class="paper-figure">
-        <object data="./figures/fig1.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" aria-label="DUET overview">
-          <div class="figure-fallback">PDF preview unavailable. <a href="./figures/fig1.pdf">Open Figure 1</a>.</div>
-        </object>
+      <figure class="paper-figure paper-figure--wide">
+        <img src="./figures/fig1_01.png" alt="DUET overview: dual-action disagreement for failure detection and recovery" width="25699" height="9070" loading="eager">
         <figcaption class="figure-caption"><strong>Figure 1.</strong> DUET overview. Cross-space disagreement scores execution deviations and gates relative control with absolute-waypoint correction.</figcaption>
       </figure>
       <h2 class="subtitle has-text-centered teaser-summary">
@@ -123,41 +121,36 @@
 </section>
 
 <section class="section is-light" id="method">
-  <div class="container is-max-desktop">
+  <div class="container is-max-widescreen">
     <h2 class="title is-3 has-text-centered section-title">Method</h2>
-    <div class="content has-text-justified reading-column">
-      <p>DUET predicts the demonstrated behavior in two complementary coordinate systems. The <strong>relative head</strong> receives the current robot state and produces precise local commands. The <strong>absolute head</strong> excludes explicit proprioception and predicts global end-effector waypoints from vision and language, anchored by residual vector quantization (RVQ).</p>
-    </div>
 
-    <div class="columns method-points">
-      <div class="column">
+    <div class="method-split">
+      <figure class="paper-figure paper-figure--method">
+        <img src="./figures/fig2_01.png" alt="DUET dual-head architecture with RVQ and adaptive gating" width="6411" height="7392" loading="lazy">
+        <figcaption class="figure-caption"><strong>Figure 2.</strong> Dual-head architecture with RVQ anchoring and disagreement-gated action selection.</figcaption>
+      </figure>
+
+      <div class="method-copy">
+        <div class="content has-text-justified">
+          <p>DUET predicts the demonstrated behavior in two complementary coordinate systems. The <strong>relative head</strong> receives the current robot state and produces precise local commands. The <strong>absolute head</strong> excludes explicit proprioception and predicts global end-effector waypoints from vision and language, anchored by residual vector quantization (RVQ).</p>
+        </div>
+
         <div class="method-point"><strong>1. Predict</strong><p>Generate a relative command Δa<sub>t</sub> and an absolute waypoint ŵ<sub>t</sub> from shared VLM features.</p></div>
-      </div>
-      <div class="column">
         <div class="method-point"><strong>2. Compare</strong><p>Transport the waypoint into local action space and measure cross-space disagreement D<sub>t</sub>.</p></div>
-      </div>
-      <div class="column">
         <div class="method-point"><strong>3. Recover</strong><p>Use disagreement to raise α<sub>t</sub>, shifting control toward the global recovery correction.</p></div>
+
+        <div class="equation equation--stack">
+          <div>\( D_t = \dfrac{\lVert c_t - \Delta a_t \rVert_2}{\sqrt{6}} \)</div>
+          <div>\( \alpha_t = \sigma\!\big(k(q_t-\tau)\big) \)</div>
+          <div>\( a_t = (1-\alpha_t)\Delta a_t + \alpha_t c_t \)</div>
+        </div>
       </div>
     </div>
-
-    <div class="equation">
-      \( D_t = \lVert c_t - \Delta a_t \rVert_2 / \sqrt{6}, \qquad
-      \alpha_t = \sigma(k(q_t-\tau)), \qquad
-      a_t = (1-\alpha_t)\Delta a_t + \alpha_t c_t \)
-    </div>
-
-    <figure class="paper-figure architecture">
-      <object data="./figures/fig2.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" aria-label="DUET architecture">
-        <div class="figure-fallback">PDF preview unavailable. <a href="./figures/fig2.pdf">Open Figure 2</a>.</div>
-      </object>
-      <figcaption class="figure-caption"><strong>Figure 2.</strong> DUET architecture. A shared VLM feeds a state-aware relative flow head and an RVQ-conditioned absolute flow head; their disagreement determines adaptive action selection.</figcaption>
-    </figure>
   </div>
 </section>
 
 <section class="section" id="experiments">
-  <div class="container is-max-desktop">
+  <div class="container is-max-widescreen">
     <h2 class="title is-3 has-text-centered section-title">Experiments</h2>
     <div class="content has-text-justified reading-column">
       <p>We evaluate DUET across four LIBERO suites under nominal execution and four controlled failure families: action perturbation, robot displacement, camera occlusion, and object or grasp drop. Detection baselines follow matched success-only protocols.</p>
@@ -168,6 +161,98 @@
       <div class="column is-half-mobile is-one-quarter-tablet"><div class="metric-box"><div class="metric-value">+36.7</div><div class="metric-label">Action perturbation gain (pp)</div></div></div>
       <div class="column is-half-mobile is-one-quarter-tablet"><div class="metric-box"><div class="metric-value">0.845</div><div class="metric-label">Failure detection AUROC</div></div></div>
       <div class="column is-half-mobile is-one-quarter-tablet"><div class="metric-box"><div class="metric-value">0.900</div><div class="metric-label">Failure detection TPR</div></div></div>
+    </div>
+
+    <div class="experiment-block">
+      <div class="experiment-heading">
+        <span class="experiment-index">01</span>
+        <div>
+          <h3>Simulation: Recovery under Four Disturbances</h3>
+          <p>Matched LIBERO rollouts comparing the StarVLA baseline with DUET.</p>
+        </div>
+      </div>
+
+      <div class="disturbance-grid">
+        <article class="disturbance-card">
+          <div class="disturbance-title"><span>(a)</span><div><h4>Action Perturbation</h4><p>Injected action-space disturbance</p></div></div>
+          <div class="comparison-videos">
+            <div class="comparison-item">
+              <div class="method-label baseline-label">StarVLA</div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_action_starvla.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_action_starvla.mp4</p></div>
+              </div>
+            </div>
+            <div class="comparison-item">
+              <div class="method-label duet-label">DUET</div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_action_duet.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_action_duet.mp4</p></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="disturbance-card">
+          <div class="disturbance-title"><span>(b)</span><div><h4>Robot Displacement</h4><p>End-effector teleport</p></div></div>
+          <div class="comparison-videos">
+            <div class="comparison-item">
+              <div class="method-label baseline-label">StarVLA</div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_eef_starvla.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_eef_starvla.mp4</p></div>
+              </div>
+            </div>
+            <div class="comparison-item">
+              <div class="method-label duet-label">DUET</div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_eef_duet.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_eef_duet.mp4</p></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="disturbance-card">
+          <div class="disturbance-title"><span>(c)</span><div><h4>Camera Occlusion</h4><p>Observation blackout</p></div></div>
+          <div class="comparison-videos">
+            <div class="comparison-item">
+              <div class="method-label baseline-label">StarVLA</div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_camera_starvla.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_camera_starvla.mp4</p></div>
+              </div>
+            </div>
+            <div class="comparison-item">
+              <div class="method-label duet-label">DUET</div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_camera_duet.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_camera_duet.mp4</p></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="disturbance-card">
+          <div class="disturbance-title"><span>(d)</span><div><h4>Object / Grasp Drop</h4><p>Gripper slip and object displacement</p></div></div>
+          <div class="comparison-videos">
+            <div class="comparison-item">
+              <div class="method-label baseline-label">StarVLA</div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_drop_starvla.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_drop_starvla.mp4</p></div>
+              </div>
+            </div>
+            <div class="comparison-item">
+              <div class="method-label duet-label">DUET</div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_drop_duet.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_drop_duet.mp4</p></div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
     </div>
 
     <h3 class="title is-5 has-text-centered results-heading">LIBERO Success Rate (%)</h3>
@@ -201,18 +286,67 @@
 </section>
 
 <section class="section is-light" id="robot">
-  <div class="container is-max-desktop">
+  <div class="container is-max-widescreen">
     <h2 class="title is-3 has-text-centered section-title">Real-Robot Evaluation</h2>
     <div class="content has-text-justified reading-column">
       <p>We deploy DUET with a π<sub>0</sub>-base backbone on a 7-DoF Franka Emika Panda. Four tasks cover pick-and-place, block pushing, drawer opening, and whiteboard wiping. DUET preserves nominal performance while recovering from both robot-state and world-state shifts.</p>
     </div>
 
-    <figure class="paper-figure robot">
-      <object data="./figures/real-robot-exp.pdf#toolbar=0&navpanes=0&scrollbar=0&view=FitH" type="application/pdf" aria-label="Real robot experiments">
-        <div class="figure-fallback">PDF preview unavailable. <a href="./figures/real-robot-exp.pdf">Open the real-robot figure</a>.</div>
-      </object>
+    <figure class="paper-figure paper-figure--wide">
+      <img src="./figures/real-robot-exp_01.png" alt="Real-robot tasks and OOD recovery comparisons on Franka Panda" width="13605" height="5760" loading="lazy">
       <figcaption class="figure-caption"><strong>Real-robot evaluation.</strong> Four manipulation tasks and qualitative recovery under EEF and object displacement.</figcaption>
     </figure>
+
+    <div class="experiment-block real-comparison">
+      <div class="experiment-heading">
+        <span class="experiment-index">02</span>
+        <div>
+          <h3>Real Robot: Recovery under Two OOD Families</h3>
+          <p>Matched Franka trials comparing the π<sub>0</sub> baseline with DUET.</p>
+        </div>
+      </div>
+      <div class="disturbance-grid disturbance-grid--real">
+        <article class="disturbance-card">
+          <div class="disturbance-title"><span>(a)</span><div><h4>Robot-State OOD</h4><p>Random-direction end-effector shift</p></div></div>
+          <div class="comparison-videos">
+            <div class="comparison-item">
+              <div class="method-label baseline-label">π<sub>0</sub></div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/real_robot_state_pi.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>real_robot_state_pi.mp4</p></div>
+              </div>
+            </div>
+            <div class="comparison-item">
+              <div class="method-label duet-label">DUET</div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/real_robot_state_duet.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>real_robot_state_duet.mp4</p></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="disturbance-card">
+          <div class="disturbance-title"><span>(b)</span><div><h4>World-State OOD</h4><p>Object displacement during manipulation</p></div></div>
+          <div class="comparison-videos">
+            <div class="comparison-item">
+              <div class="method-label baseline-label">π<sub>0</sub></div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/real_world_state_pi.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>real_world_state_pi.mp4</p></div>
+              </div>
+            </div>
+            <div class="comparison-item">
+              <div class="method-label duet-label">DUET</div>
+              <div class="video-frame">
+                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/real_world_state_duet.mp4" type="video/mp4"></video>
+                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>real_world_state_duet.mp4</p></div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
 
     <h3 class="title is-5 has-text-centered results-heading">Overall Real-Robot Success (%)</h3>
     <div class="table-container">
@@ -281,6 +415,19 @@
     } catch {
       label.textContent = "Select and copy above";
     }
+  });
+
+  document.querySelectorAll(".video-frame video").forEach(video => {
+    const frame = video.closest(".video-frame");
+    const markReady = () => {
+      video.dataset.ready = "true";
+      frame.classList.add("has-video");
+    };
+    video.addEventListener("loadeddata", markReady);
+    video.addEventListener("error", () => {
+      video.dataset.ready = "false";
+      frame.classList.remove("has-video");
+    });
   });
 </script>
 </body>
