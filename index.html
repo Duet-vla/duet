@@ -26,6 +26,7 @@
   <div class="navbar-menu">
     <div class="navbar-start" style="flex-grow:1;justify-content:center;">
       <a class="navbar-item" href="#abstract"><span class="icon"><i class="fas fa-align-left"></i></span>Abstract</a>
+      <a class="navbar-item" href="#video">Video</a>
       <a class="navbar-item" href="#method">Method</a>
       <a class="navbar-item" href="#experiments">Experiments</a>
       <a class="navbar-item" href="#robot">Real Robot</a>
@@ -120,6 +121,20 @@
   </div>
 </section>
 
+<section class="section" id="video">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-3 has-text-centered section-title">Video</h2>
+    <p class="has-text-centered reading-column" style="margin:0 auto 1.25rem;color:#666;">A short overview of DUET: dual-action disagreement for failure detection and recovery.</p>
+    <div class="video-card overview-video">
+      <div class="video-frame has-video">
+        <video controls playsinline preload="metadata">
+          <source src="./static/videos/pre.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section is-light" id="method">
   <div class="container is-max-widescreen">
     <h2 class="title is-3 has-text-centered section-title">Method</h2>
@@ -153,7 +168,7 @@
   <div class="container is-max-widescreen">
     <h2 class="title is-3 has-text-centered section-title">Experiments</h2>
     <div class="content has-text-justified reading-column">
-      <p>We evaluate DUET across four LIBERO suites under nominal execution and four controlled failure families: action perturbation, robot displacement, camera occlusion, and object or grasp drop. Detection baselines follow matched success-only protocols.</p>
+      <p>We evaluate DUET across four LIBERO suites under nominal execution and four controlled failure families: action perturbation, EEF teleport, vertical grasp drop, and camera blackout. Detection baselines follow matched success-only protocols.</p>
     </div>
 
     <div class="columns is-mobile is-multiline metric-row">
@@ -167,87 +182,79 @@
       <div class="experiment-heading">
         <span class="experiment-index">01</span>
         <div>
-          <h3>Simulation: Recovery under Four Disturbances</h3>
-          <p>Matched LIBERO rollouts comparing the StarVLA baseline with DUET.</p>
+          <h3>Simulation: Failure-Aware Retry</h3>
+          <p>Object-suite disturbances on matched LIBERO rollouts, comparing the StarVLA relative-action baseline with DUET.</p>
         </div>
       </div>
 
       <div class="disturbance-grid">
         <article class="disturbance-card">
-          <div class="disturbance-title"><span>(a)</span><div><h4>Action Perturbation</h4><p>Injected action-space disturbance</p></div></div>
+          <div class="disturbance-title"><span>(a)</span><div><h4>Action Perturbation</h4></div></div>
           <div class="comparison-videos">
             <div class="comparison-item">
               <div class="method-label baseline-label">StarVLA</div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_action_starvla.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_action_starvla.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/sim_action_starvla.mp4" type="video/mp4"></video>
               </div>
             </div>
             <div class="comparison-item">
               <div class="method-label duet-label">DUET</div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_action_duet.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_action_duet.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/sim_action_duet.mp4" type="video/mp4"></video>
               </div>
             </div>
           </div>
         </article>
 
         <article class="disturbance-card">
-          <div class="disturbance-title"><span>(b)</span><div><h4>Robot Displacement</h4><p>End-effector teleport</p></div></div>
+          <div class="disturbance-title"><span>(b)</span><div><h4>EEF Teleport</h4></div></div>
           <div class="comparison-videos">
             <div class="comparison-item">
               <div class="method-label baseline-label">StarVLA</div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_eef_starvla.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_eef_starvla.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/sim_eef_starvla.mp4" type="video/mp4"></video>
               </div>
             </div>
             <div class="comparison-item">
               <div class="method-label duet-label">DUET</div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_eef_duet.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_eef_duet.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/sim_eef_duet.mp4" type="video/mp4"></video>
               </div>
             </div>
           </div>
         </article>
 
         <article class="disturbance-card">
-          <div class="disturbance-title"><span>(c)</span><div><h4>Camera Occlusion</h4><p>Observation blackout</p></div></div>
+          <div class="disturbance-title"><span>(c)</span><div><h4>Vertical Grasp Drop</h4></div></div>
           <div class="comparison-videos">
             <div class="comparison-item">
               <div class="method-label baseline-label">StarVLA</div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_camera_starvla.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_camera_starvla.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/sim_drop_starvla.mp4" type="video/mp4"></video>
               </div>
             </div>
             <div class="comparison-item">
               <div class="method-label duet-label">DUET</div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_camera_duet.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_camera_duet.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/sim_drop_duet.mp4" type="video/mp4"></video>
               </div>
             </div>
           </div>
         </article>
 
         <article class="disturbance-card">
-          <div class="disturbance-title"><span>(d)</span><div><h4>Object / Grasp Drop</h4><p>Gripper slip and object displacement</p></div></div>
+          <div class="disturbance-title"><span>(d)</span><div><h4>Camera Blackout</h4></div></div>
           <div class="comparison-videos">
             <div class="comparison-item">
               <div class="method-label baseline-label">StarVLA</div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_drop_starvla.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_drop_starvla.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/sim_camera_starvla.mp4" type="video/mp4"></video>
               </div>
             </div>
             <div class="comparison-item">
               <div class="method-label duet-label">DUET</div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/sim_drop_duet.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>sim_drop_duet.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/sim_camera_duet.mp4" type="video/mp4"></video>
               </div>
             </div>
           </div>
@@ -311,16 +318,14 @@
           <div class="comparison-videos">
             <div class="comparison-item">
               <div class="method-label baseline-label">π<sub>0</sub></div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/real_robot_state_pi.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>real_robot_state_pi.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/real_robot_state_pi.mp4" type="video/mp4"></video>
               </div>
             </div>
             <div class="comparison-item">
               <div class="method-label duet-label">DUET</div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/real_robot_state_duet.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>real_robot_state_duet.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/real_robot_state_duet.mp4" type="video/mp4"></video>
               </div>
             </div>
           </div>
@@ -331,16 +336,14 @@
           <div class="comparison-videos">
             <div class="comparison-item">
               <div class="method-label baseline-label">π<sub>0</sub></div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/real_world_state_pi.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>real_world_state_pi.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/real_world_state_pi.mp4" type="video/mp4"></video>
               </div>
             </div>
             <div class="comparison-item">
               <div class="method-label duet-label">DUET</div>
-              <div class="video-frame">
-                <video controls muted loop playsinline preload="metadata"><source src="./static/videos/real_world_state_duet.mp4" type="video/mp4"></video>
-                <div class="video-placeholder"><span class="video-icon"><i class="fas fa-play"></i></span><p>real_world_state_duet.mp4</p></div>
+              <div class="video-frame has-video">
+                <video controls muted loop playsinline preload="auto"><source src="./static/videos/real_world_state_duet.mp4" type="video/mp4"></video>
               </div>
             </div>
           </div>
@@ -423,11 +426,9 @@
       video.dataset.ready = "true";
       frame.classList.add("has-video");
     };
+    if (video.readyState >= 2) markReady();
     video.addEventListener("loadeddata", markReady);
-    video.addEventListener("error", () => {
-      video.dataset.ready = "false";
-      frame.classList.remove("has-video");
-    });
+    video.addEventListener("canplay", markReady);
   });
 </script>
 </body>
